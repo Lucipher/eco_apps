@@ -11,8 +11,8 @@ module EcoApps
 
         tbn = options[:table_name] || self.table_name
 
-        if Rails.env.test? and use_cache_table?(tbn)
-          generate_table_for_test(tbn)
+        if Rails.env.test?
+          generate_table_for_test(tbn) if use_cache_table?(tbn)
         else
           config = options[:database] || MasterService.app(name).database
           config = YAML.load(config) if config.is_a?(String)
@@ -22,6 +22,7 @@ module EcoApps
           self.table_name_prefix = self.connection.current_database + "."
 
           unless options[:readonly]==false or Rails.env.test?
+          if options[:readonly] != false
             include EcoApps::ActsAsReadonly::InstanceMethods
             extend EcoApps::ActsAsReadonly::SingletonMethods
           end
