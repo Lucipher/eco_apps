@@ -21,7 +21,6 @@ module EcoApps
           self.set_table_name tbn
           self.table_name_prefix = self.connection.current_database + "."
 
-          unless options[:readonly]==false or Rails.env.test?
           if options[:readonly] != false
             include EcoApps::ActsAsReadonly::InstanceMethods
             extend EcoApps::ActsAsReadonly::SingletonMethods
