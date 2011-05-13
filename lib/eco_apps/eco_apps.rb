@@ -77,7 +77,8 @@ module EcoApps
 
     def method_missing(method_name, *args)
       m = method_name.to_s
-      if m != "url" and @config["api"].present? and @config["api"].keys.include?(m)
+      api = @config['api'].is_a?(String) ? YAML.load(@config['api']) : @config['api']
+      if m != "url" and @config["api"].present? and api.keys.include?(m)
         v = @config["api"][m]
       else
         v = @config[m]
