@@ -76,6 +76,17 @@ describe ArticlesController do
         response.body.should == "test"
       end
     end
+    
+    describe "encode_url" do
+      before do
+        Rails.env.stub!(:development?).and_return(true)
+      end
+
+      it "should get url from app's configration" do
+        controller.encode_url(url_of(:article, :comments, :article_id => 1)).should == "http://www.example.com/article/articles/1/comments"
+        #controller.url_of(:article, :comments, :article_id => 1, :params=>{:category=>"good"}).should == "http://www.example.com/article/articles/1/comments?category=good"
+      end
+    end
 
   end
 end
