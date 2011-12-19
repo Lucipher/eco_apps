@@ -93,7 +93,7 @@ module EcoApps
       
       protected
       def authenticate_url
-        key = "#{extract_ids(request.fullpath)}#{idp_password}"
+        key = "#{extract_ids(request.url)}#{idp_password}"
         render :text => I18n.t("common.illegal_request") unless key == decode(params[:key], true)
       end
       
