@@ -30,7 +30,7 @@ module EcoApps
         return path if path =~ /^(http|https):\/\//
         path = "/" + (path.split("/")-[""]).join("/")
 
-        if Rails.env.production? and request.subdomains.first =~ /^www/
+        if Rails.env.production? and ( request.subdomains.first =~ /^www/ or request.subdomains.first =~ /^ellis/ or request.subdomains.first =~ /^tc/ or request.subdomains.first =~ /^teachcast/)
           prefix = "/#{(app||EcoApps.current.name)}"
         else
           prefix = (app.blank? ? "" : "#{EcoApps.base_url}/#{app}")
